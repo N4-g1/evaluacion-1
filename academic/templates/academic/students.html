@@ -1,6 +1,27 @@
 {% extends 'academic/base.html' %}
 
 {% block content %}
+<div class="card shadow-sm border-0 mb-4">
+  <div class="card-body">
+    <h2 class="h4 mb-3">Crear estudiante</h2>
+    <form id="student-form">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-5">
+          <label for="student-first-name" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="student-first-name" name="first_name" required>
+        </div>
+        <div class="col-md-5">
+          <label for="student-last-name" class="form-label">Apellido</label>
+          <input type="text" class="form-control" id="student-last-name" name="last_name" required>
+        </div>
+        <div class="col-md-2 d-grid">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div class="card shadow-sm border-0">
   <div class="card-body">
     <h2 class="h4 mb-3">Estudiantes</h2>
@@ -18,6 +39,21 @@
 </div>
 
 <script>
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
 async function loadStudents() {
   const response = await fetch('/api/students/');
   const data = await response.json();
@@ -36,6 +72,38 @@ async function loadStudents() {
     tbody.appendChild(row);
   });
 }
+
+document.getElementById('student-form').addEventListener('submit', async function (event) {
+  event.preventDefault();
+
+  const firstName = document.getElementById('student-first-name').value.trim();
+  const lastName = document.getElementById('student-last-name').value.trim();
+
+  if (!firstName || !lastName) {
+    alert('Completa nombre y apellido del estudiante.');
+    return;
+  }
+
+  const response = await fetch('/api/students/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': getCookie('csrftoken')
+    },
+    body: JSON.stringify({
+      first_name: firstName,
+      last_name: lastName
+    })
+  });
+
+  if (response.ok) {
+    document.getElementById('student-form').reset();
+    loadStudents();
+  } else {
+    const data = await response.json();
+    alert(data.detail || JSON.stringify(data));
+  }
+});
 
 loadStudents();
 </script>

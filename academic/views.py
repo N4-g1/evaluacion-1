@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListCreateAPIView, ListAPIView
 from .models import Teacher, Course, Student
 from .serializers import TeacherSerializer, CourseSerializer, StudentSerializer
 
@@ -10,14 +10,14 @@ class TeacherListAPIView(ListAPIView):
     serializer_class = TeacherSerializer
 
 
-# API para listar cursos
-class CourseListAPIView(ListAPIView):
+# API para listar y crear cursos
+class CourseListAPIView(ListCreateAPIView):
     queryset = Course.objects.select_related('teacher').all().order_by('id')
     serializer_class = CourseSerializer
 
 
-# API para listar estudiantes
-class StudentListAPIView(ListAPIView):
+# API para listar y crear estudiantes
+class StudentListAPIView(ListCreateAPIView):
     queryset = Student.objects.all().order_by('id')
     serializer_class = StudentSerializer
 

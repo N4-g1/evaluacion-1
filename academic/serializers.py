@@ -12,10 +12,22 @@ class TeacherSerializer(serializers.ModelSerializer):
 # Serializador para cursos con información del docente
 class CourseSerializer(serializers.ModelSerializer):
     teacher = TeacherSerializer(read_only=True)
+    teacher_id = serializers.PrimaryKeyRelatedField(
+        source='teacher',
+        queryset=Teacher.objects.all(),
+        write_only=True,
+        required=False,
+    )
 
     class Meta:
         model = Course
-        fields = ['id', 'name', 'teacher']
+        fields = ['id', 'name', 'teacher', 'teacher_id']
+
+    def to_internal_value(self, data):
+        data = data.copy()
+        if 'teacher' in data and 'teacher_id' not in data:
+            data['teacher_id'] = data['teacher']
+        return super().to_internal_value(data)
 
 
 # Serializador para estudiantes
