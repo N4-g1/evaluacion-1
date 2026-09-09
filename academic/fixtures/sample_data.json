@@ -1,0 +1,114 @@
+[
+  {
+    "model": "academic.teacher",
+    "pk": 1,
+    "fields": {
+      "first_name": "Marcelo",
+      "last_name": "Alvarado"
+    }
+  },
+  {
+    "model": "academic.teacher",
+    "pk": 2,
+    "fields": {
+      "first_name": "Ana",
+      "last_name": "Molina"
+    }
+  },
+  {
+    "model": "academic.teacher",
+    "pk": 3,
+    "fields": {
+      "first_name": "Luis",
+      "last_name": "Pérez"
+    }
+  },
+  {
+    "model": "academic.course",
+    "pk": 1,
+    "fields": {
+      "name": "Desarrollo Backend",
+      "teacher": 1
+    }
+  },
+  {
+    "model": "academic.course",
+    "pk": 2,
+    "fields": {
+      "name": "Bases de Datos",
+      "teacher": 2
+    }
+  },
+  {
+    "model": "academic.course",
+    "pk": 3,
+    "fields": {
+      "name": "Diseño de Interfaces",
+      "teacher": 3
+    }
+  },
+  {
+    "model": "academic.student",
+    "pk": 1,
+    "fields": {
+      "first_name": "Camila",
+      "last_name": "Rojas"
+    }
+  },
+  {
+    "model": "academic.student",
+    "pk": 2,
+    "fields": {
+      "first_name": "Diego",
+      "last_name": "Torres"
+    }
+  },
+  {
+    "model": "academic.student",
+    "pk": 3,
+    "fields": {
+      "first_name": "Fernanda",
+      "last_name": "Soto"
+    }
+  },
+  {
+    "model": "academic.student",
+    "pk": 4,
+    "fields": {
+      "first_name": "Mateo",
+      "last_name": "Vera"
+    }
+  },
+  {
+    "model": "academic.studentcourse",
+    "pk": 1,
+    "fields": {
+      "student": 1,
+      "course": 1
+    }
+  },
+  {
+    "model": "academic.studentcourse",
+    "pk": 2,
+    "fields": {
+      "student": 2,
+      "course": 1
+    }
+  },
+  {
+    "model": "academic.studentcourse",
+    "pk": 3,
+    "fields": {
+      "student": 3,
+      "course": 2
+    }
+  },
+  {
+    "model": "academic.studentcourse",
+    "pk": 4,
+    "fields": {
+      "student": 4,
+      "course": 3
+    }
+  }
+]

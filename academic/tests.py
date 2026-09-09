@@ -1,0 +1,21 @@
+from django.test import TestCase
+from django.urls import reverse
+
+
+class AcademicViewsTests(TestCase):
+    def test_home_page_loads(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_courses_page_loads(self):
+        response = self.client.get('/courses/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_students_page_loads(self):
+        response = self.client.get('/students/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_api_courses_endpoint(self):
+        response = self.client.get('/api/courses/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('results', response.json())

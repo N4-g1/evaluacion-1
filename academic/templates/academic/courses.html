@@ -1,0 +1,43 @@
+{% extends 'academic/base.html' %}
+
+{% block content %}
+<div class="card shadow-sm border-0">
+  <div class="card-body">
+    <h2 class="h4 mb-3">Cursos</h2>
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Curso</th>
+          <th>Docente</th>
+        </tr>
+      </thead>
+      <tbody id="courses-table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+async function loadCourses() {
+  const response = await fetch('/api/courses/');
+  const data = await response.json();
+  const rows = data.results || data;
+  const tbody = document.getElementById('courses-table-body');
+
+  tbody.innerHTML = '';
+
+  rows.forEach(course => {
+    const teacher = course.teacher ? `${course.teacher.first_name} ${course.teacher.last_name}` : 'Sin docente';
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${course.id}</td>
+      <td>${course.name}</td>
+      <td>${teacher}</td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+loadCourses();
+</script>
+{% endblock %}
